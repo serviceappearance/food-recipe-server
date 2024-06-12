@@ -2,6 +2,7 @@ package org.project.foodrecipeserver.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.project.foodrecipeserver.converter.StringListConverter;
@@ -9,12 +10,14 @@ import org.project.foodrecipeserver.converter.StringListConverter;
 import java.util.List;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Recipe {
   @Id
+  @GeneratedValue
   private int id;
+  private long recipeId;
   @Column(nullable = false, unique = true)
   private String recipeTitle;
   @Column(nullable = false)
@@ -25,25 +28,4 @@ public class Recipe {
   @Column(name = "steps", nullable = false,length = 400)
   @Convert(converter = StringListConverter.class)
   private List<String> recipeSteps;
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public void setRecipeSteps(List<String> recipeSteps) {
-    this.recipeSteps = recipeSteps;
-  }
-
-  public void setRecipeIngredients(List<String> recipeIngredients) {
-    this.recipeIngredients = recipeIngredients;
-  }
-
-  public void setRecipeImageLink(String recipeImageLink) {
-    this.recipeImageLink = recipeImageLink;
-  }
-
-  public void setRecipeTitle(String recipeTitle) {
-    this.recipeTitle = recipeTitle;
-  }
-
 }

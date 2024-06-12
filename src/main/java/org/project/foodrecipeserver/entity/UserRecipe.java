@@ -16,14 +16,15 @@ public class UserRecipe {
   @Id
   @GeneratedValue
   private int id;
+  private int recipeId;
   @Column(nullable = false, unique = true)
   private String recipeTitle;
   @Column(nullable = false)
   private String recipeImageLink;
-  @Column(name = "ingredients", nullable = false)
+  @Column(name = "ingredients", nullable = false,length = 1000)
   @Convert(converter = StringListConverter.class)
   private List<String> recipeIngredients;
-  @Column(name = "steps", nullable = false,length = 400)
+  @Column(name = "steps", nullable = false,length = 1000)
   @Convert(converter = StringListConverter.class)
   private List<String> recipeSteps;
 }

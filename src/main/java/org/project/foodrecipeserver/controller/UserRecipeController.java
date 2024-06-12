@@ -25,14 +25,14 @@ public class UserRecipeController {
 
 
   @GetMapping("/{recipeId}")
-  public UserRecipe getUserRecipe(@PathVariable("recipeId") int recipeId) {
+  public UserRecipeResponseDto getUserRecipe(@PathVariable("recipeId") int recipeId) {
     return userRecipeService.getUserRecipeById(recipeId);
   }
 
   @PostMapping
-  public UserRecipe addUserRecipe(@RequestBody UserRecipe userRecipe) {
+  public UserRecipeResponseDto addUserRecipe(@RequestBody UserRecipe userRecipe) {
     int userRecipeId = userRecipeService.addUserRecipe(userRecipe);
-    UserRecipe userRecipeById = userRecipeService.getUserRecipeById(userRecipeId);
+    UserRecipeResponseDto userRecipeById = userRecipeService.getUserRecipeById(userRecipeId);
     return userRecipeById;
   }
 

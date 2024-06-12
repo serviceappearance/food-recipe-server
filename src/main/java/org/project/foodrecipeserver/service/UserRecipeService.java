@@ -27,7 +27,7 @@ public class UserRecipeService {
   public List<UserRecipeResponseDto> getAllUserRecipeDto() {
     return userRecipeRepository.findAll().stream()
         .map(recipe -> new UserRecipeResponseDto(
-            recipe.getId(),
+            recipe.getRecipeId(),
             recipe.getRecipeTitle(),
             recipe.getRecipeImageLink(),
             recipe.getRecipeIngredients(),
@@ -37,8 +37,15 @@ public class UserRecipeService {
   }
 
 
-  public UserRecipe getUserRecipeById(int id) {
-    return userRecipeRepository.findById(id).get();
+  public UserRecipeResponseDto getUserRecipeById(int id) {
+    UserRecipe userRecipeByRecipeId = userRecipeRepository.findByRecipeId(id);
+    return new UserRecipeResponseDto(
+        userRecipeByRecipeId.getRecipeId(),
+        userRecipeByRecipeId.getRecipeTitle(),
+        userRecipeByRecipeId.getRecipeImageLink(),
+        userRecipeByRecipeId.getRecipeIngredients(),
+        userRecipeByRecipeId.getRecipeSteps()
+    );
   }
 
   public int addUserRecipe(UserRecipe userRecipe) {
