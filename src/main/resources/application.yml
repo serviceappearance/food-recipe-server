@@ -17,9 +17,14 @@ spring:
         format_sql: true
         use_sql_comments: true
         hbm2ddl:
-          auto: none
+          auto: create
+  # api-key import
+  config:
+    import: classpath:config.yml
+
 # default error message template - no use
 server:
   error:
     whitelabel:
       enabled: true
+

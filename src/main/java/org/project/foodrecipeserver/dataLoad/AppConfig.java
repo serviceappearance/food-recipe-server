@@ -1,4 +1,4 @@
-package org.project.foodrecipeserver.config;
+package org.project.foodrecipeserver.dataLoad;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -4,16 +4,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
-import org.project.foodrecipeserver.converter.StringListConverter;
-
-import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+@NoArgsConstructor
+public class CustomRecipe {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;

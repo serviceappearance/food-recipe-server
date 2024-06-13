@@ -1,22 +1,21 @@
 package org.project.foodrecipeserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRecipeResponseDto {
+public class CustomRecipeResponseDto {
   @JsonProperty("recipe_id")
-  private long recipeId;
+  private int recipeId;
   @JsonProperty("RCP_NM")
-  private String RCP_NM;
+  private String recipeTitle;
   @JsonProperty("ATT_FILE_NO_MAIN")
-  private String ATT_FILE_NO_MAIN;
-  private String ingredients;
-  private String steps;
+  private String recipeImageLink;
+  private String recipeIngredients;
+  private String recipeSteps;
 }

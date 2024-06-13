@@ -1,6 +1,7 @@
 package org.project.foodrecipeserver.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.project.foodrecipeserver.dto.UserRecipeRequestDto;
 import org.project.foodrecipeserver.dto.UserRecipeResponseDto;
 import org.project.foodrecipeserver.entity.UserRecipe;
 import org.project.foodrecipeserver.service.UserRecipeService;
@@ -14,31 +15,24 @@ import java.util.List;
 public class UserRecipeController {
   private final UserRecipeService userRecipeService;
 
-  public List<UserRecipe> getAllUserRecipe() {
+  @GetMapping
+  public List<UserRecipeResponseDto> getAllUserRecipe() {
     return userRecipeService.getAllUserRecipes();
   }
 
-  @GetMapping
-  public List<UserRecipeResponseDto> getAllUserRecipeDto() {
-    return userRecipeService.getAllUserRecipeDto();
-  }
-
-
-  @GetMapping("/{recipeId}")
-  public UserRecipeResponseDto getUserRecipe(@PathVariable("recipeId") int recipeId) {
-    return userRecipeService.getUserRecipeById(recipeId);
+  @GetMapping("/{id}")
+  public UserRecipeResponseDto getUserRecipe(@PathVariable("id") int id) {
+    return userRecipeService.getUserRecipeById(id);
   }
 
   @PostMapping
-  public UserRecipeResponseDto addUserRecipe(@RequestBody UserRecipe userRecipe) {
-    int userRecipeId = userRecipeService.addUserRecipe(userRecipe);
-    UserRecipeResponseDto userRecipeById = userRecipeService.getUserRecipeById(userRecipeId);
-    return userRecipeById;
+  public void addUserRecipe(@RequestBody UserRecipeRequestDto userRecipeRequestDto) {
+    userRecipeService.addUserRecipe(userRecipeRequestDto.getId());
   }
 
-  @DeleteMapping("/{recipeId}")
-  public void deleteUserRecipe(@PathVariable("recipeId") int recipeId) {
-    userRecipeService.deleteUserRecipe(recipeId);
+  @DeleteMapping
+  public void deleteUserRecipe(@RequestBody UserRecipeRequestDto userRecipeRequestDto) {
+    userRecipeService.deleteUserRecipe((int) userRecipeRequestDto.getId());
   }
 
 }

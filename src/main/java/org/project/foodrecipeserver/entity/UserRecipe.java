@@ -14,17 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 public class UserRecipe {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private int recipeId;
-  @Column(nullable = false, unique = true)
-  private String recipeTitle;
-  @Column(nullable = false)
-  private String recipeImageLink;
-  @Column(name = "ingredients", nullable = false,length = 1000)
-  @Convert(converter = StringListConverter.class)
-  private List<String> recipeIngredients;
-  @Column(name = "steps", nullable = false,length = 1000)
-  @Convert(converter = StringListConverter.class)
-  private List<String> recipeSteps;
+  @ManyToOne
+  @JoinColumn(name = "recipe_id")
+  private Recipe recipe;
 }

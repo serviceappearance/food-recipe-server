@@ -1,9 +1,11 @@
 package org.project.foodrecipeserver.service;
 
-import org.project.foodrecipeserver.dto.RecipeResponseDto;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.project.foodrecipeserver.entity.Recipe;
 import org.project.foodrecipeserver.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,22 +19,35 @@ public class RecipeService {
   @Autowired
   private RecipeRepository recipeRepository;
 
+  @Value("${my.api.key}")
+  private String apiKey;
+
   public void fetchAndSaveRecipeData() {
-    ResponseEntity<RecipeResponseDto> response = restTemplate.exchange(
-        "http://openapi.foodsafetykorea.go.kr/api/f066be87d43a408e99bd/COOKRCP01/json/1/100",
+    ResponseEntity<String> response = restTemplate.exchange(
+        "http://openapi.foodsafetykorea.go.kr/api/" + apiKey + "/COOKRCP01/json/1/100",
         HttpMethod.GET,
         null,
-        RecipeResponseDto.class);
+        String.class);
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode rootNode = objectMapper.readTree(response.getBody());
+      JsonNode rowNode = rootNode.path("COOKRCP01").path("row");
 
-    RecipeResponseDto recipeResponseDto = response.getBody();
+      for (JsonNode recipeNode : rowNode) {
+        String name = recipeNode.path("RCP_NM").asText();
+        long recipeId = Long.parseLong(recipeNode.path("RCP_SEQ").asText());
+        String imageUrl = recipeNode.path("MANUAL_IMG01").asText();
+        String partsDetails = recipeNode.path("RCP_PARTS_DTLS").asText();
+        String cookingInstructions = recipeNode.path("MANUAL01").asText();
 
-    Recipe recipe = new Recipe();
-    recipe.setRecipeId(recipeResponseDto.getRecipeId());
-    recipe.setRecipeTitle(recipeResponseDto.getRCP_NM());
-    recipe.setRecipeImageLink(recipeResponseDto.getATT_FILE_NO_MAIN());
-    recipe.setRecipeIngredients(recipeResponseDto.getIngredients());
-    recipe.setRecipeSteps(recipeResponseDto.getSteps());
+//        Recipe recipe = new Recipe(0,recipeId, name, imageUrl, partsDetails, cookingInstructions);
+//        recipeRepository.save(recipe);
+      }
 
-    recipeRepository.save(recipe);
+      System.out.println("레시피 데이터를 저장했습니다.");
+    } catch (Exception e) {
+      System.err.println("레시피 데이터를 저장하는 도중 오류가 발생했습니다: " + e.getMessage());
+    }
   }
 }
+
