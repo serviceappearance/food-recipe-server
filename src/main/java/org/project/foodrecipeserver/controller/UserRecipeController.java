@@ -1,5 +1,6 @@
 package org.project.foodrecipeserver.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.project.foodrecipeserver.dto.UserRecipeRequestDto;
 import org.project.foodrecipeserver.dto.UserRecipeResponseDto;
@@ -26,13 +27,13 @@ public class UserRecipeController {
   }
 
   @PostMapping
-  public void addUserRecipe(@RequestBody UserRecipeRequestDto userRecipeRequestDto) {
-    userRecipeService.addUserRecipe(userRecipeRequestDto.getId());
+  public void addUserRecipe(@Valid @RequestBody UserRecipeRequestDto userRecipeRequestDto) {
+    userRecipeService.addUserRecipe(userRecipeRequestDto.getRecipeId());
   }
 
   @DeleteMapping
   public void deleteUserRecipe(@RequestBody UserRecipeRequestDto userRecipeRequestDto) {
-    userRecipeService.deleteUserRecipe((int) userRecipeRequestDto.getId());
+    userRecipeService.deleteUserRecipe((int) userRecipeRequestDto.getRecipeId());
   }
 
 }

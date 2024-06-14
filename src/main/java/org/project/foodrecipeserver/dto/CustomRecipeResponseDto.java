@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomRecipeResponseDto {
-  @JsonProperty("recipe_id")
-  private int recipeId;
+  private int Id;
   @JsonProperty("RCP_NM")
   private String recipeTitle;
   @JsonProperty("ATT_FILE_NO_MAIN")

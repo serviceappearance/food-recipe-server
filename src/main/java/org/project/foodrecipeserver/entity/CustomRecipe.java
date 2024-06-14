@@ -1,6 +1,7 @@
 package org.project.foodrecipeserver.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ public class CustomRecipe {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  private long recipeId;
   @Column(nullable = false, unique = true)
+  @NotNull
   private String recipeTitle;
   @Column(nullable = false)
   private String recipeImageLink;

@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRecipeResponseDto {
+  private int id;
   @JsonProperty("recipe_id")
   private long recipeId;
   @JsonProperty("RCP_NM")
