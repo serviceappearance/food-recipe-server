@@ -49,6 +49,7 @@ public class UserRecipeService {
 
   public UserRecipeResponseDto getUserRecipeById(int id) {
     UserRecipe userRecipeById = userRecipeRepository.findById(id).get();
+    System.out.println(userRecipeById.getRecipe().getRecipeId());
     return new UserRecipeResponseDto(
         userRecipeById.getId(),
         userRecipeById.getRecipe().getRecipeId(),
